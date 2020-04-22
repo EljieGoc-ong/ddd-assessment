@@ -12,6 +12,6 @@ namespace ddd_assessment.DataContracts
         bool AddNewUser(User uName);
         BalanceModel userBalance(int id);
         BalanceModel ExchangeMoney(MoneyExchange me);
-        //bool ChargeMoney(ChargeMoney money);
+        bool SendMoney(SendMoney sendMoney);
     }
 }

@@ -1,4 +1,5 @@
-﻿using ddd_assessment.Models;
+﻿using ddd_assessment.DataManager;
+using ddd_assessment.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,20 +7,16 @@ using System.Threading.Tasks;
 
 namespace ddd_assessment.Domain
 {
-    public class Money
+    public class Money : IMoney
     {
-        public Money()
+        public decimal? AddMoneyToBalance(decimal? balance, decimal? amount)
         {
-        }
-
-        private Currency currency;
-        private decimal amount;
-        private Dictionary<Currency, decimal> Currencies = new Dictionary<Currency, decimal>();
-
-        public Money(Currency currency, decimal amount)
-        {
-            this.currency = currency;
-            this.amount = amount;
+            decimal? result = 0;
+            if (balance > 0)
+                result = balance + amount;
+            else
+                result = amount;
+            return result;
         }
     }
 }

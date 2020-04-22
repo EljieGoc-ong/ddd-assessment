@@ -6,24 +6,30 @@ using System.Threading.Tasks;
 
 namespace ddd_assessment.Domain
 {
-    public class Balance
+    public class Balance : IBalance
     {
-        public Balance()
-        {
-        }
-
         private Dictionary<CurrencyModel, decimal?> currency = new Dictionary<CurrencyModel, decimal?>();
 
-        public virtual void AddMoney(MoneyModel money)
+        public decimal MoneyRatioConvert(List<BalanceModel> data, decimal firstCurrencyRatio)
         {
-            if (currency.ContainsKey(money.Currency))
+            decimal amountValue = 0; 
+            foreach (var d in data)
             {
-                currency[money.Currency] = (currency.GetValueOrDefault(money.Currency) + money.Amount);
+                amountValue += d.Amount * (d.Ratio / firstCurrencyRatio);
             }
-            else
+
+            return amountValue;
+
+        }
+
+        public decimal? ExchangeMoney(List<BalanceModel> data, int? toCurrency, int? fromCurrency)
+        {
+            decimal? amountValue = 0;
+            foreach (var d in data)
             {
-                currency.Add(money.Currency, money.Amount);
+                amountValue += d.Amount * (toCurrency.GetValueOrDefault(1) / fromCurrency.GetValueOrDefault(1));
             }
+            return amountValue;
         }
     }
 }

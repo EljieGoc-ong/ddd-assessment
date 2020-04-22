@@ -2,6 +2,7 @@ using AutoFixture;
 using ddd_assessment.Controllers;
 using ddd_assessment.DataContracts;
 using ddd_assessment.DataManager;
+using ddd_assessment.Domain;
 using ddd_assessment.Models;
 using ddd_assessment.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,17 +21,25 @@ namespace ddd_trading_engine
         {
         }
 
-        private readonly Mock<IUserAppService> _userAppServiceMock;
         private readonly Mock<IUserDatamanager> _userDataManagerMock;
+        private readonly Mock<IUserAppService> _userAppServiceMock;
+        private readonly Mock<IMoney> _moneyMock;
+        private readonly Mock<IBalance> _balanceMock;
+
         public TradingEngineTest()
         {
             _userAppServiceMock = new Mock<IUserAppService>();
             _userDataManagerMock = new Mock<IUserDatamanager>();
+            _moneyMock = new Mock<IMoney>();
+            _balanceMock = new Mock<IBalance>();
 
         }
 
         private UserAppService Create() =>
-            new UserAppService(_userDataManagerMock.Object);
+            new UserAppService(_userDataManagerMock.Object,
+                                _userAppServiceMock.Object,
+                                _moneyMock.Object,
+                                _balanceMock.Object);
 
         [Test]
         public void Add_Money_Should_Return_Type_of_Bool()
@@ -111,6 +120,21 @@ namespace ddd_trading_engine
             var response = service.ExchangeMoney(inputData);
 
             Assert.AreEqual(response.GetType(), typeof(BalanceModel));
+        }
+
+        [Test]
+        public void Send_Money_Should_Return_Type_oF_Bool()
+        {
+            var fixture = new Fixture();
+            var inputData = fixture.Create<SendMoney>();
+
+            var result = fixture.Create<bool>();
+
+            var service = Create();
+            _userAppServiceMock.Setup(x => x.SendMoney(inputData)).Returns(result);
+            var response = service.SendMoney(inputData);
+
+            Assert.AreEqual(response.GetType(), typeof(bool));
         }
     }
 }

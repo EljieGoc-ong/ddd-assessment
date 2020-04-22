@@ -31,7 +31,6 @@ namespace ddd_assessment.Controllers
             return data;
         }
 
-
         [Route("add-new-user")]
         [HttpPost]
         public bool AddNewUser([FromBody]User uName)
@@ -49,34 +48,19 @@ namespace ddd_assessment.Controllers
         }
 
         [Route("user-exchange-money")]
-        [HttpPut]
+        [HttpPost]
         public BalanceModel ExchangeMoney(MoneyExchange me)
         {
             var data = _userAppService.ExchangeMoney(me);
             return data;
         }
 
-        
-
-
-
-
-        //[Route("trading/charge-money")]
-        //[HttpPost]
-        //public bool chargeMoney([FromBody]ChargeMoney money)
-        //{
-        //    var data = _balanceAppService.ChargeMoney(money);
-
-        //    return data;
-        //}
-
-        //[Route("trading/exchange-money")]
-        //[HttpPost]
-        //public bool exchangeMoney([FromBody]ExchangeMoney money)
-        //{
-        //    var data = _balanceAppService.ChargeMoney(money);
-
-        //    return data;
-        //}
+        [Route("user-send-money")]
+        [HttpPost]
+        public bool SendMoney(SendMoney sendMoney)
+        {
+            var data = _userAppService.SendMoney(sendMoney);
+            return data;
+        }
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
 using ddd_assessment.Utils;
+using ddd_assessment.Domain;
 
 namespace ddd_assessment
 {
@@ -33,6 +34,8 @@ namespace ddd_assessment
             services.AddControllers();
             services.AddScoped<IUserAppService, UserAppService>();
             services.AddScoped<IUserDatamanager, IUserDataManager>();
+            services.AddScoped<IBalance, Balance>();
+            services.AddScoped<IMoney, Money>();
             services.InitializeDapperConnectionString(Configuration.GetConnectionString("DefaultConnection"));
         }
 
