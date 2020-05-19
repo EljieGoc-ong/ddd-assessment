@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>ddd_assessment</RootNamespace>
+    <StartupObject>ddd_assessment.Program</StartupObject>
+    <PackageProjectUrl>http://localhost:44390/</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
